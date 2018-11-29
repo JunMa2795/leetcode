@@ -1,0 +1,68 @@
+// My stupid solution
+class Solution {
+    
+    public int uniquePaths(int m, int n) {
+        if (m == 1 || n == 1) {
+            return 1;
+        }
+        
+        if (m == 2) {
+            return n;
+        }
+        
+        if (n == 2) {
+            return m;
+        }
+        
+        int result = 0;
+        int[] array = new int[101];
+        
+        for (int i = 0; i < n; i++) {
+            array[i] = i + 1;
+        }
+        
+        for (int i = 0; i < m - 2; i++) {
+            int temp = 0;
+            for (int j = 0; j < n; j++) {
+                temp += array[j];
+                array[j] = temp;
+            }
+            result = array[n - 1];
+        }
+        
+        return result;
+    }
+
+}
+
+// A GREAT explanation here: https://www.youtube.com/watch?v=GO5QHC_BmvM
+
+// DP solution
+public class Solution {
+    public int uniquePaths(int m, int n) {
+        Integer[][] map = new Integer[m][n];
+        for(int i = 0; i<m;i++){
+            map[i][0] = 1;
+        }
+        for(int j= 0;j<n;j++){
+            map[0][j]=1;
+        }
+        for(int i = 1;i<m;i++){
+            for(int j = 1;j<n;j++){
+                map[i][j] = map[i-1][j]+map[i][j-1];
+            }
+        }
+        return map[m-1][n-1];
+    }
+}
+
+// Shortcut solution C(m-1)(m+n-2)...
+public int uniquePaths(int m, int n) {
+
+     long result = 1;
+     for(int i=0;i<Math.min(m-1,n-1);i++)
+         result = result*(m+n-2-i)/(i+1); 
+     return (int)result;
+
+}
+

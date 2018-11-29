@@ -1,0 +1,61 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    public void construct_path(TreeNode root, String path, LinkedList<String> paths) {
+        
+        if (root != null) {
+            path += Integer.toString(root.val);
+            if (root.left == null && root.right == null) {  // leaf
+                paths.add(path);
+            } else {
+                path += "->";
+                construct_path(root.left, path, paths);
+                construct_path(root.right, path, paths);
+            }
+        }
+        
+    }
+    
+    public List<String> binaryTreePaths(TreeNode root) {
+        LinkedList<String> paths = new LinkedList();
+        construct_path(root, "", paths);
+        return paths;
+    }
+}
+
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val) {
+ *     this.val = val;
+ *     this.left = this.right = null;
+ * }
+ */
+/**
+ * @param {TreeNode} root
+ * @return {string[]}
+ */
+var binaryTreePaths = function(root) {
+    var paths = [];
+    pathsBuilder(root, '', paths);
+    return paths;
+};
+
+var pathsBuilder = function(root, path, paths) {
+    if (root !== null) {
+        path += root.val;
+        if (root.left === null && root.right === null) {    // leaf
+            paths.push(path);
+        } else {
+            path += '->';
+            pathsBuilder(root.left, path, paths);
+            pathsBuilder(root.right, path, paths);
+        }
+    }
+}
